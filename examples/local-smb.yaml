@@ -1,0 +1,35 @@
+server:
+  host: "0.0.0.0"
+  port: "8443"
+  tls:
+    cert_file: "CERT_FILE_PATH"
+    key_file: "KEY_FILE_PATH"
+
+auth:
+  type: "local"
+
+storage:
+  type: "smb"
+
+local_auth:
+  users_file: "/app/users.json"
+
+smb:
+  server: "SMB_SERVER_IP"
+  port: 445
+  share: "SHARE_NAME"
+  path: ""
+  domain: "WORKGROUP"
+
+jwt:
+  secret_key: "CHANGE_ME_GENERATE_WITH_openssl_rand_base64_64"
+  encryption_key: "CHANGE_ME_EXACTLY_32_CHARACTERS!"
+  issuer: "photo-sync-backend"
+  expiry: "24h"
+
+pool:
+  connection_ttl: "10m"
+
+logging:
+  level: "info"
+

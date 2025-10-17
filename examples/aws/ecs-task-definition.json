@@ -1,0 +1,44 @@
+{
+  "family": "photo-sync-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "photo-sync-backend",
+      "image": "YOUR_ECR_REPOSITORY/photo-sync-backend:latest",
+      "portMappings": [
+        {
+          "containerPort": 8443,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "CONFIG_FILE",
+          "value": "/app/config.yaml"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "JWT_SECRET",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT:secret:photo-sync/jwt-secret"
+        },
+        {
+          "name": "STORAGE_CREDENTIALS",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT:secret:photo-sync/storage-creds"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/photo-sync-backend",
+          "awslogs-region": "REGION",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
+

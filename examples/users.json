@@ -1,0 +1,15 @@
+[
+  {
+    "username": "user1",
+    "password_hash": "$2a$10$EXAMPLE_BCRYPT_HASH_GENERATE_WITH_htpasswd",
+    "email": "user1@example.com",
+    "full_name": "User One"
+  },
+  {
+    "username": "user2",
+    "password_hash": "$2a$10$EXAMPLE_BCRYPT_HASH_GENERATE_WITH_htpasswd",
+    "email": "user2@example.com",
+    "full_name": "User Two"
+  }
+]
+

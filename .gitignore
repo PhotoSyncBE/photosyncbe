@@ -1,0 +1,33 @@
+# Configuration files (contain sensitive data)
+config.yaml
+config.local.yaml
+config.production.yaml
+
+# Certificates and keys
+certs/
+*.pem
+*.key
+*.crt
+
+# JWT keys backup (generated during build)
+.jwt-keys-backup.txt
+
+# Build artifacts
+server
+*.exe
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Docker volumes
+docker-volumes/

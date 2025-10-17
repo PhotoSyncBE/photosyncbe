@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: photo-sync-config
+  namespace: default
+data:
+  config.yaml: |
+    server:
+      host: "0.0.0.0"
+      port: "8443"
+      tls:
+        cert_file: "/certs/tls.crt"
+        key_file: "/certs/tls.key"
+    auth:
+      type: "CHANGE_ME"
+    storage:
+      type: "CHANGE_ME"
+    jwt:
+      secret_key: "CHANGE_ME"
+      encryption_key: "CHANGE_ME_32_CHARS"
+      issuer: "photo-sync-backend"
+      expiry: "24h"
+    pool:
+      connection_ttl: "10m"
+    logging:
+      level: "info"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: photo-sync-secrets
+  namespace: default
+type: Opaque
+stringData:
+  jwt-secret: "CHANGE_ME"
+  jwt-encryption: "CHANGE_ME_32_CHARS"
+  storage-credentials: "CHANGE_ME"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photo-sync-backend
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: photo-sync-backend
+  template:
+    metadata:
+      labels:
+        app: photo-sync-backend
+    spec:
+      containers:
+      - name: photo-sync-backend
+        image: photo-sync-backend:latest
+        ports:
+        - containerPort: 8443
+          name: https
+        env:
+        - name: CONFIG_FILE
+          value: "/app/config.yaml"
+        volumeMounts:
+        - name: config
+          mountPath: /app/config.yaml
+          subPath: config.yaml
+        - name: certs
+          mountPath: /certs
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: config
+        configMap:
+          name: photo-sync-config
+      - name: certs
+        secret:
+          secretName: photo-sync-tls
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: photo-sync-backend
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8443
+    targetPort: 8443
+    protocol: TCP
+    name: https
+  selector:
+    app: photo-sync-backend
+

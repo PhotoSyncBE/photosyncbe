@@ -1,0 +1,78 @@
+# Photo Sync Backend Configuration Example
+# Copy this file to config.yaml and customize for your environment
+
+server:
+  host: "0.0.0.0"
+  port: "8443"
+  tls:
+    cert_file: "/path/to/your/fullchain.pem"
+    key_file: "/path/to/your/privkey.pem"
+
+# Authentication backend options: active_directory, ldap, local, oauth2
+auth:
+  type: "active_directory"
+
+# Storage backend options: smb, s3, nfs, local
+storage:
+  type: "smb"
+
+# Active Directory / LDAP Configuration (only needed for active_directory/ldap auth)
+ldap:
+  server: "ldap://YOUR_LDAP_SERVER:389"
+  base_dn: "DC=yourdomain,DC=com"
+  user_filter: "(sAMAccountName={username})"
+  bind_dn: "CN=service_account,OU=Users,DC=yourdomain,DC=com"
+  bind_pass: "YOUR_SERVICE_ACCOUNT_PASSWORD"
+
+# SMB Configuration (only needed for smb storage)
+smb:
+  server: "YOUR_SMB_SERVER_IP"
+  port: 445
+  share: "SHARE_NAME"
+  path: ""  # User subdirectories will be created per user
+  domain: "YOUR_DOMAIN"
+
+# S3 Configuration (only needed for s3 storage)
+s3:
+  endpoint: "https://s3.amazonaws.com"
+  region: "us-east-1"
+  bucket: "your-bucket-name"
+  access_key: "YOUR_ACCESS_KEY"
+  secret_key: "YOUR_SECRET_KEY"
+  use_ssl: true
+
+# NFS Configuration (only needed for nfs storage)
+nfs:
+  server: "YOUR_NFS_SERVER_IP"
+  path: "/export/photos"
+  mount_options: "vers=4.1"
+
+# Local Storage Configuration (only needed for local storage)
+local:
+  base_path: "/var/photos"
+
+# Local Authentication (only needed for local auth)
+local_auth:
+  users_file: "/path/to/users.json"
+
+# OAuth2 Configuration (only needed for oauth2 auth)
+oauth2:
+  provider: "google"  # or "github"
+  client_id: "YOUR_CLIENT_ID"
+  client_secret: "YOUR_CLIENT_SECRET"
+  redirect_url: "https://yourdomain.com/auth/callback"
+
+# JWT Configuration (keys will be auto-generated during build if not set)
+jwt:
+  secret_key: "AUTO_GENERATED_DURING_BUILD"
+  encryption_key: "AUTO_GENERATED_DURING_BUILD_32_CHARS"
+  issuer: "photo-sync-backend"
+  expiry: "24h"
+
+# Connection pool settings
+pool:
+  connection_ttl: "10m"
+
+# Logging level: debug, info, warn, error
+logging:
+  level: "info"

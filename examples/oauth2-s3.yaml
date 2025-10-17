@@ -1,0 +1,40 @@
+server:
+  host: "0.0.0.0"
+  port: "8443"
+  tls:
+    cert_file: "CERT_FILE_PATH"
+    key_file: "KEY_FILE_PATH"
+
+auth:
+  type: "oauth2"
+
+storage:
+  type: "s3"
+
+oauth2:
+  provider: "google"
+  client_id: "CHANGE_ME_GOOGLE_CLIENT_ID"
+  client_secret: "CHANGE_ME_GOOGLE_CLIENT_SECRET"
+  redirect_url: "https://your-domain.com:8443/auth/callback"
+
+s3:
+  endpoint: "https://s3.amazonaws.com"
+  region: "us-east-1"
+  bucket: "BUCKET_NAME"
+  access_key: "CHANGE_ME_AWS_ACCESS_KEY"
+  secret_key: "CHANGE_ME_AWS_SECRET_KEY"
+  path_prefix: "photos"
+  use_ssl: true
+
+jwt:
+  secret_key: "CHANGE_ME_GENERATE_WITH_openssl_rand_base64_64"
+  encryption_key: "CHANGE_ME_EXACTLY_32_CHARACTERS!"
+  issuer: "photo-sync-backend"
+  expiry: "24h"
+
+pool:
+  connection_ttl: "10m"
+
+logging:
+  level: "info"
+

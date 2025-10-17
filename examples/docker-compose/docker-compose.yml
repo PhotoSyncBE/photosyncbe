@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  photo-sync-backend:
+    image: photo-sync-backend:latest
+    container_name: photo-sync-backend
+    ports:
+      - "8443:8443"
+    environment:
+      - CONFIG_FILE=/app/config.yaml
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./certs:/app/certs:ro
+      - ./users.json:/app/users.json:ro
+    restart: unless-stopped
+    networks:
+      - photo-sync-net
+
+networks:
+  photo-sync-net:
+    driver: bridge
+

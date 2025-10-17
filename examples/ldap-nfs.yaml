@@ -1,0 +1,38 @@
+server:
+  host: "0.0.0.0"
+  port: "8443"
+  tls:
+    cert_file: "CERT_FILE_PATH"
+    key_file: "KEY_FILE_PATH"
+
+auth:
+  type: "ldap"
+
+storage:
+  type: "nfs"
+
+ldap_generic:
+  server: "ldap://LDAP_SERVER_IP:389"
+  base_dn: "dc=CHANGE_ME,dc=CHANGE_ME"
+  user_filter: "(uid={username})"
+  bind_dn: "cn=CHANGE_ME,dc=CHANGE_ME,dc=CHANGE_ME"
+  bind_pass: "CHANGE_ME"
+  user_dn_pattern: "uid={username},ou=people,dc=CHANGE_ME,dc=CHANGE_ME"
+
+nfs:
+  server: "NFS_SERVER_IP"
+  export: "/export/photos"
+  path: ""
+
+jwt:
+  secret_key: "CHANGE_ME_GENERATE_WITH_openssl_rand_base64_64"
+  encryption_key: "CHANGE_ME_EXACTLY_32_CHARACTERS!"
+  issuer: "photo-sync-backend"
+  expiry: "24h"
+
+pool:
+  connection_ttl: "10m"
+
+logging:
+  level: "info"
+

@@ -1,0 +1,39 @@
+server:
+  host: "0.0.0.0"
+  port: "8443"
+  tls:
+    cert_file: "CERT_FILE_PATH"
+    key_file: "KEY_FILE_PATH"
+
+auth:
+  type: "active_directory"
+
+storage:
+  type: "smb"
+
+ldap:
+  server: "ldap://AD_SERVER_IP:389"
+  base_dn: "DC=CHANGE_ME,DC=CHANGE_ME"
+  user_filter: "(sAMAccountName={username})"
+  bind_dn: "CN=CHANGE_ME,OU=CHANGE_ME,DC=CHANGE_ME,DC=CHANGE_ME"
+  bind_pass: "CHANGE_ME"
+
+smb:
+  server: "SMB_SERVER_IP"
+  port: 445
+  share: "SHARE_NAME"
+  path: ""
+  domain: "DOMAIN_NAME"
+
+jwt:
+  secret_key: "CHANGE_ME_GENERATE_WITH_openssl_rand_base64_64"
+  encryption_key: "CHANGE_ME_EXACTLY_32_CHARACTERS!"
+  issuer: "photo-sync-backend"
+  expiry: "24h"
+
+pool:
+  connection_ttl: "10m"
+
+logging:
+  level: "info"
+
