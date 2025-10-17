@@ -564,6 +564,4 @@ See `examples/` directory for:
 - Kubernetes manifests
 - AWS ECS task definitions
 
-## License
 
-MIT License
