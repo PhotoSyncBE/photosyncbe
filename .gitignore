@@ -12,8 +12,8 @@ certs/
 # JWT keys backup (generated during build)
 .jwt-keys-backup.txt
 
-# Build artifacts
-server
+# Build artifacts (binary output, not source)
+/server
 *.exe
 
 # IDE files
